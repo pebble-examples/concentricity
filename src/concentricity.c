@@ -6,6 +6,7 @@
 #include "round.h"
 #endif
 
+// Define struct to store colors for each time unit
 typedef struct Palette {
   GColor seconds;
   GColor minutes;
@@ -20,6 +21,7 @@ static uint8_t s_hour;
 static uint8_t s_minute;
 static uint8_t s_second;
 
+// Generate a color (randomized color on >SDK2) to use for drawing routines
 static GColor get_draw_color() {
   GColor color = GColorWhite;
   
@@ -32,11 +34,12 @@ static GColor get_draw_color() {
   return color;
 }
 
+// Set the color for drawing routines 
 static void set_color(GContext *ctx, GColor color) {
   graphics_context_set_fill_color(ctx, color);
-  graphics_context_set_stroke_color(ctx, color);
 }
 
+// Update the watchface display
 static void update_display(Layer *layer, GContext *ctx) {
   set_color(ctx, s_palette->seconds);
   draw_seconds(ctx, s_second, layer);
@@ -52,6 +55,7 @@ static void update_display(Layer *layer, GContext *ctx) {
   if(s_hour % 12 == 0 && s_minute == 0) { s_palette->hours = get_draw_color(); }
 }
 
+// Update the current time values for the watchface
 static void update_time(struct tm *tick_time) {
   s_hour = tick_time->tm_hour;
   s_minute = tick_time->tm_min;

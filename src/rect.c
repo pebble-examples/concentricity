@@ -8,6 +8,7 @@
 #define SCALED_TIME(time) (time * 100)/60
 #define SCALED_HOUR(hour) (hour * 100)/12
 
+// Define struct to store the numerical values used for drawing a given border
 typedef struct Border {
   uint16_t top_right;
   uint16_t right;
@@ -19,6 +20,7 @@ typedef struct Border {
   uint16_t max_vertical;
 } Border;
 
+// Calculate & return a Border object for the given layer, desired padding, and current time
 static Border calculate_border(Layer *layer, uint8_t padding, uint32_t scaled_time) {
   GRect bounds = layer_get_bounds(layer);
   uint16_t max_horizontal = bounds.size.w-(2*padding)-1; // Remove padding from both ends of the side
@@ -79,7 +81,8 @@ static Border calculate_border(Layer *layer, uint8_t padding, uint32_t scaled_ti
   return border;
 }
 
-void draw_border(GContext *ctx, Border border, uint8_t padding, uint8_t stroke_width) {
+// Draw a border, one segment at a time
+static void draw_border(GContext *ctx, Border border, uint8_t padding, uint8_t stroke_width) {
   // Top-left to top-middle
   graphics_fill_rect(ctx,
                      GRect(border.bounds.origin.x+padding, border.bounds.origin.y+padding, border.top_left, stroke_width),
@@ -112,18 +115,21 @@ void draw_border(GContext *ctx, Border border, uint8_t padding, uint8_t stroke_w
                      0, 0);  
 }
 
+// Handle representation of seconds
 void draw_seconds(GContext *ctx, uint8_t seconds, Layer *layer) {
   uint8_t padding = 0;
   uint8_t stroke_width = 14;
   draw_border(ctx, calculate_border(layer, padding, SCALED_TIME(seconds)), padding, stroke_width);
 }
 
+// Handle representation of minutes
 void draw_minutes(GContext *ctx, uint8_t minutes, Layer *layer) {
   uint8_t padding = 20;
   uint8_t stroke_width = 14;
   draw_border(ctx, calculate_border(layer, padding, SCALED_TIME(minutes)), padding, stroke_width);
 }
 
+// Handle representation of hours
 void draw_hours(GContext *ctx, uint8_t hours, Layer *layer) {
   uint8_t padding = 40;
   uint8_t stroke_width = 14;
