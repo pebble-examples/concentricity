@@ -1,6 +1,6 @@
 // TODO: Handle cases where the stroke_width + padding combo is too large for the screen resolution
 
-#if defined(PBL_DISP_SHAPE_RECT)
+#if defined(PBL_RECT)
 
 #include <pebble.h>
 #include "rect.h"

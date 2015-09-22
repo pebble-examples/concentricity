@@ -1,4 +1,4 @@
-#if defined(PBL_DISP_SHAPE_ROUND)
+#if defined(PBL_ROUND)
 
 #include <pebble.h>
 #include "round.h"

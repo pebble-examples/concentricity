@@ -1,8 +1,8 @@
 #include <pebble.h>
 
-#if defined(PBL_DISP_SHAPE_RECT)
+#if defined(PBL_RECT)
 #include "rect.h"
-#elif defined(PBL_DISP_SHAPE_ROUND)
+#elif defined(PBL_ROUND)
 #include "round.h"
 #endif
 
@@ -52,7 +52,7 @@ static void update_display(Layer *layer, GContext *ctx) {
   
   if(s_second == 0) { s_palette->seconds = get_draw_color(); }
   if(s_minute == 0 && s_second == 0) { s_palette->minutes = get_draw_color(); }
-  if(s_hour % 12 == 0 && s_minute == 0) { s_palette->hours = get_draw_color(); }
+  if(s_hour % 12 == 0 && s_minute == 0 && s_second == 0) { s_palette->hours = get_draw_color(); }
 }
 
 // Update the current time values for the watchface
@@ -100,7 +100,7 @@ static void init(void) {
   window_stack_push(s_window, true);
 
   time_t start = time(NULL);
-  srand(start);
+  srand(102784);
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
   update_time(localtime(&start));
 }
