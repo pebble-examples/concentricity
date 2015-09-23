@@ -2,7 +2,6 @@
 
 #include <pebble.h>
 #include "round.h"
-#include "utils.h"
 
 #define TIME_ANGLE(time) time * (TRIG_MAX_ANGLE / 60)
 #define HOUR_ANGLE(hour) hour * (TRIG_MAX_ANGLE / 12)
@@ -11,8 +10,7 @@
 static void draw_arc(GContext *ctx, GRect rect, uint16_t thickness, uint32_t end_angle) {
   if(end_angle == 0) {
     graphics_fill_radial(ctx, rect, GOvalScaleModeFitCircle, thickness, 0, TRIG_MAX_ANGLE);
-  }
-  else {
+  } else {
     graphics_fill_radial(ctx, rect, GOvalScaleModeFitCircle, thickness, 0, end_angle); 
   }
 }

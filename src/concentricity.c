@@ -71,9 +71,9 @@ static void window_unload(Window *window) {
 static void init(void) {
   s_window = window_create();
   
-  #ifdef PBL_SDK_2
+#ifdef PBL_SDK_2
   window_set_fullscreen(s_window, true);
-  #endif
+#endif
   
   window_set_window_handlers(s_window, (WindowHandlers) {
     .load = window_load,
