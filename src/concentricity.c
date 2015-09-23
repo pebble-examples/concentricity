@@ -1,10 +1,5 @@
 #include <pebble.h>
-
-#if defined(PBL_RECT)
-#include "rect.h"
-#elif defined(PBL_ROUND)
-#include "round.h"
-#endif
+#include "ui.h"
 
 // Define struct to store colors for each time unit
 typedef struct Palette {

@@ -1,7 +1,7 @@
 #if defined(PBL_ROUND)
 
 #include <pebble.h>
-#include "round.h"
+#include "ui.h"
 
 #define TIME_ANGLE(time) time * (TRIG_MAX_ANGLE / 60)
 #define HOUR_ANGLE(hour) hour * (TRIG_MAX_ANGLE / 12)
