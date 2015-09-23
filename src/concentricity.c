@@ -21,19 +21,6 @@ static uint8_t s_hour;
 static uint8_t s_minute;
 static uint8_t s_second;
 
-// Generate a color (randomized color on >SDK2) to use for drawing routines
-static GColor get_draw_color() {
-  GColor color = GColorWhite;
-  
-  #ifndef PBL_SDK_2
-  do {
-    color = GColorFromRGB(rand() % 255, rand() % 255, rand() % 255);
-  } while(gcolor_equal(color, GColorBlack));
-  #endif
-  
-  return color;
-}
-
 // Set the color for drawing routines 
 static void set_color(GContext *ctx, GColor color) {
   graphics_context_set_fill_color(ctx, color);
@@ -49,10 +36,6 @@ static void update_display(Layer *layer, GContext *ctx) {
 
   set_color(ctx, s_palette->hours);
   draw_hours(ctx, s_hour % 12, layer);
-  
-  if(s_second == 0) { s_palette->seconds = get_draw_color(); }
-  if(s_minute == 0 && s_second == 0) { s_palette->minutes = get_draw_color(); }
-  if(s_hour % 12 == 0 && s_minute == 0 && s_second == 0) { s_palette->hours = get_draw_color(); }
 }
 
 // Update the current time values for the watchface
@@ -70,9 +53,9 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 static void window_load(Window *window) {
   s_palette = malloc(sizeof(Palette));
   *s_palette = (Palette) {
-    get_draw_color(),
-    get_draw_color(),
-    get_draw_color()
+      COLOR_FALLBACK(GColorRichBrilliantLavender,GColorWhite),
+      COLOR_FALLBACK(GColorVividViolet,GColorWhite),
+      COLOR_FALLBACK(GColorBlueMoon,GColorWhite)
   };
   
   s_layer = layer_create(layer_get_bounds(window_get_root_layer(s_window)));
@@ -100,7 +83,6 @@ static void init(void) {
   window_stack_push(s_window, true);
 
   time_t start = time(NULL);
-  srand(102784);
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
   update_time(localtime(&start));
 }
