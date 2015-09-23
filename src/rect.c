@@ -1,7 +1,7 @@
 #if defined(PBL_RECT)
 
 #include <pebble.h>
-#include "rect.h"
+#include "ui.h"
 
 #define SCALED_TIME(time) ((time) * 100) / 60
 #define SCALED_HOUR(hour) ((hour) * 100) / 12
