@@ -21,11 +21,11 @@ typedef struct Border {
 // Calculate & return a Border object for the given layer, desired padding, and current time
 static Border calculate_border(Layer *layer, uint8_t padding, uint32_t scaled_time) {
   GRect bounds = layer_get_bounds(layer);
-  uint16_t max_horizontal = bounds.size.w - (2 * padding) - 1; // Remove padding from both ends of the side
-  uint16_t max_vertical = bounds.size.h - (2 * padding) - 1; // Remove padding from both ends of the side
+  uint16_t max_horizontal = bounds.size.w - (2 * padding); // Remove padding from both ends of the side
+  uint16_t max_vertical = bounds.size.h - (2 * padding); // Remove padding from both ends of the side
   Border border = {0, 0, 0, 0, 0, bounds, max_horizontal, max_vertical};
   
-  uint32_t num_pixels = 2 * (max_horizontal - 1) + 2 * (max_vertical - 1);
+  uint32_t num_pixels = 2 * (max_horizontal - 1) + 2 * (max_vertical - 1); // Remove duplicated corner pixels
   uint32_t progress = (scaled_time * num_pixels) / 100;
 
   // Check for invalid time values
