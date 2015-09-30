@@ -16,7 +16,7 @@ static uint8_t s_hour;
 static uint8_t s_minute;
 static uint8_t s_second;
 
-// Set the color for drawing routines 
+// Set the color for drawing routines
 static void set_color(GContext *ctx, GColor color) {
   graphics_context_set_fill_color(ctx, color);
 }
@@ -48,11 +48,11 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 static void window_load(Window *window) {
   s_palette = malloc(sizeof(Palette));
   *s_palette = (Palette) {
-      COLOR_FALLBACK(GColorRichBrilliantLavender,GColorWhite),
-      COLOR_FALLBACK(GColorVividViolet,GColorWhite),
-      COLOR_FALLBACK(GColorBlueMoon,GColorWhite)
+      COLOR_FALLBACK(GColorRichBrilliantLavender, GColorWhite),
+      COLOR_FALLBACK(GColorVividViolet, GColorWhite),
+      COLOR_FALLBACK(GColorBlueMoon, GColorWhite)
   };
-  
+
   s_layer = layer_create(layer_get_bounds(window_get_root_layer(s_window)));
   layer_add_child(window_get_root_layer(s_window), s_layer);
   layer_set_update_proc(s_layer, update_display);
@@ -65,11 +65,11 @@ static void window_unload(Window *window) {
 
 static void init(void) {
   s_window = window_create();
-  
+
 #ifdef PBL_SDK_2
   window_set_fullscreen(s_window, true);
 #endif
-  
+
   window_set_window_handlers(s_window, (WindowHandlers) {
     .load = window_load,
     .unload = window_unload
