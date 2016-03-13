@@ -24,3 +24,7 @@ script: ./travis/build
 env:
   global:
     - PEBBLE_TOOL=4.2
+
+branches:
+  only:
+    - master
