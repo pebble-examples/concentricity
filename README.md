@@ -1,4 +1,5 @@
 # concentricity
+[![Build Status](https://travis-ci.org/pebble-examples/concentricity.svg?branch=master)](https://travis-ci.org/pebble-examples/concentricity)
 
 This is a simple watchface example that demonstrates how to build a watchface that is compatible with all Pebble
 platforms (aplite, basalt, chalk). It makes use of new graphics APIs, including `graphics_fill_radial`, and 
