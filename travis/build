@@ -8,3 +8,7 @@ yes | ./pebble-dev/pebble-sdk-$PEBBLE_TOOL-linux64/bin/pebble build
 source ./pebble-dev/pebble-sdk-$PEBBLE_TOOL-linux64/.env/bin/activate
 cpplint src/*
 deactivate
+
+if [[ $TRAVIS_BRANCH == 'master' ]]; then
+  ./pebble-dev/pebble-sdk-$PEBBLE_TOOL-linux64/bin/pebble release publish
+fi
