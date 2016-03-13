@@ -1,3 +1,5 @@
+// Copyright [2015] Pebble Technology
+
 #pragma once
 
 /* 

@@ -1,5 +1,7 @@
+// Copyright [2015] Pebble Technology
+
 #include <pebble.h>
-#include "ui.h"
+#include "./ui.h"
 
 // Define struct to store colors for each time unit
 typedef struct Palette {

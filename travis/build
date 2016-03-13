@@ -3,3 +3,8 @@ set -e # halt script on error
 
 # Pipe 'yes' into pebble tool to accept terms and conditions
 yes | ./pebble-dev/pebble-sdk-$PEBBLE_TOOL-linux64/bin/pebble build
+
+# Run the C linter
+source .env/bin/activate
+cpplint src/*
+deactivate
