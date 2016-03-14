@@ -1,5 +1,7 @@
+// Copyright [2015] Pebble Technology
+
 #include <pebble.h>
-#include "ui.h"
+#include "./ui.h"
 
 // Define struct to store colors for each time unit
 typedef struct Palette {
@@ -75,7 +77,7 @@ static void init(void) {
 
   time_t start = time(NULL);
   tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
-  update_time(localtime(&start));
+  update_time(localtime(&start));  // NOLINT(runtime/threadsafe_fn)
 }
 
 static void deinit(void) {
