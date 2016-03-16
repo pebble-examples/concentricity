@@ -3,7 +3,7 @@
   "shortName": "Concentricity",
   "longName": "Concentricity",
   "companyName": "Pebble Technology",
-  "versionLabel": "1.1",
+  "versionLabel": "2.0",
   "sdkVersion": "3",
   "targetPlatforms": ["aplite", "basalt", "chalk"],
   "watchapp": {

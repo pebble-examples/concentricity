@@ -1,30 +1,25 @@
 sudo: false
-
 language: python
 python:
- - 2.7
-
+- 2.7
 addons:
   apt:
     sources:
-      - libsdl1.2debian
-      - libfdt1
-      - libpixman-1-0
-
+    - libsdl1.2debian
+    - libfdt1
+    - libpixman-1-0
 before_install:
- - chmod +x ./travis/install
- - pip install virtualenv
-
-install: ./travis/install
-
+- chmod +x ./travis/install
+- pip install virtualenv
+install: "./travis/install"
 before_script:
- - chmod +x ./travis/build
-script: ./travis/build
-
+- chmod +x ./travis/build
+script: "./travis/build"
 env:
   global:
-    - PEBBLE_TOOL=4.2
-
+  - PEBBLE_TOOL=4.2
+  - secure: Rti1/VovveCaqo5KT9hc5EDzZcAB6bEuFpO5ldn2yweONgoXmwGNFS3a8VoryFwdfqRXVEV7CYL2IMcjfr1UWz4Yqr/Yh9oUZtrNza7oL601+NggRbUOMIKmqjAkSSQKJwFkXb0cHBvRNixVTuhNoaP9XZqN0ysdLrQ5V0qO/kykSzJefge/aX5GSfsVSRvvLOrskXIBvzhawGTNFna0VfSd+xlB/aBb20Wrshb2/JKyR/Jm9PN0Cdu1TOVzDNyj+qoMshcc60NNh8kaiR5TfC1CvSv9q25Hcw1jHa72Hf8ktsBYQNOqi4xvO5USwvjVGT6ooby68DINXHKH6jfQI3Pe7jPkHTNh9+1NB2YN2NbWa9Kno89VejlcX7vTaGG+cz0i6VX+TP6j9rENDXlvfm6DEXibiXS3RH6RWzH4KeQPU8n4F0QYDKiancu/bTKGRSbPqEA6WeF33eXo+jZzRMvo3dc4Rq44WTt/iLhnnnNGcCfZj8q4nW3pxhBNrkGl1WcgLpoabANz77IdARiLjruPT4iC7ycn2vghfng5eKKTB3BkK2P2Z4PHD+XsOb6909M1+ApYbPa8Z+XM6cTibA00GrO3wxDfreiuOpHXclllhhaiMbhRXsJzH+x8cZN+piPyiEoJcdJp5W19YKnx229OEUMW3cTpyI6Xv7MnB6E=
+  
 branches:
   only:
-    - master
+  - master
