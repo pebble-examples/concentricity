@@ -50,9 +50,9 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 static void window_load(Window *window) {
   s_palette = malloc(sizeof(Palette));
   *s_palette = (Palette) {
-      COLOR_FALLBACK(GColorRichBrilliantLavender, GColorWhite),
-      COLOR_FALLBACK(GColorVividViolet, GColorWhite),
-      COLOR_FALLBACK(GColorBlueMoon, GColorWhite)
+      PBL_IF_COLOR_ELSE(GColorRichBrilliantLavender, GColorWhite),
+      PBL_IF_COLOR_ELSE(GColorVividViolet, GColorWhite),
+      PBL_IF_COLOR_ELSE(GColorBlueMoon, GColorWhite)
   };
 
   s_layer = layer_create(layer_get_bounds(window_get_root_layer(s_window)));
