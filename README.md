@@ -6,3 +6,6 @@ platforms (aplite, basalt, chalk). It makes use of new graphics APIs, including 
 ![](/screenshots/concentricity~chalk.png)
 ![](/screenshots/concentricity~basalt.png)
 ![](/screenshots/concentricity~aplite.png)
+
+## Contributors
+[Paul Niven](https://github.com/NiVZ78)
