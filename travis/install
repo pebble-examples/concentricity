@@ -7,8 +7,9 @@ curl -O https://s3.amazonaws.com/assets.getpebble.com/pebble-tool/pebble-sdk-$PE
 tar -jxf pebble-sdk-$PEBBLE_TOOL-linux64.tar.bz2
 
 cd pebble-sdk-$PEBBLE_TOOL-linux64
-virtualenv --no-site-packages .env
+virtualenv .env
 source .env/bin/activate
 pip install -r requirements.txt
 pip install cpplint
 deactivate
+npm install

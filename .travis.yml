@@ -1,8 +1,12 @@
-sudo: false
+sudo: true
 
 language: python
 python:
- - 2.7
+ - 2.7.11
+
+language: node_js
+node_js:
+ - node
 
 addons:
   apt:
@@ -12,9 +16,8 @@ addons:
       - libpixman-1-0
 
 before_install:
+ - sudo pip install virtualenv
  - chmod +x ./travis/install
- - pip install virtualenv
-
 install: ./travis/install
 
 before_script:
@@ -23,7 +26,7 @@ script: ./travis/build
 
 env:
   global:
-    - PEBBLE_TOOL=4.2
+    - PEBBLE_TOOL=4.4.1
 
 branches:
   only:
