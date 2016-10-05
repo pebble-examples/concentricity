@@ -7,19 +7,19 @@
 
 static uint8_t s_number_time_units;
 
-static uint16_t get_stroke_width(Layer *layer) {
+static uint16_t prv_get_stroke_width(Layer *layer) {
   GRect bounds = layer_get_unobstructed_bounds(layer);
   return ((bounds.size.w / s_number_time_units) / 2) - PADDING;
 }
 
-static uint8_t calculate_inset(Layer *layer, uint8_t arc_id) {
-  return (get_stroke_width(layer) + PADDING) * arc_id;
+static uint8_t prv_calculate_inset(Layer *layer, uint8_t arc_id) {
+  return (prv_get_stroke_width(layer) + PADDING) * arc_id;
 }
 
-void draw_border(GContext *ctx, Layer *layer, uint8_t arc_id,
-                 uint8_t segment, uint8_t total_segments) {
+static void prv_draw_border(GContext *ctx, Layer *layer, uint8_t arc_id,
+                            uint8_t segment, uint8_t total_segments) {
   // Calculate x, y, width, height of border
-  uint8_t inset = calculate_inset(layer, arc_id);
+  uint8_t inset = prv_calculate_inset(layer, arc_id);
   GRect bounds = layer_get_unobstructed_bounds(layer);
   GPoint layer_center = grect_center_point(&bounds);
 
@@ -27,7 +27,7 @@ void draw_border(GContext *ctx, Layer *layer, uint8_t arc_id,
   uint16_t y = layer_center.y - (bounds.size.h / 2) + inset;
   uint16_t width = layer_center.x + (bounds.size.w / 2) - (inset * 2);
   uint16_t height = layer_center.y + (bounds.size.h / 2) - (inset * 2);
-  uint16_t stroke_width = get_stroke_width(layer);
+  uint16_t stroke_width = prv_get_stroke_width(layer);
 
   // Calculate max no of pixels in perimeter less the size of the border at
   // the four corners
@@ -143,12 +143,12 @@ void set_number_time_units(uint8_t number_time_units) {
 
 // Handle representation of seconds
 void draw_seconds(GContext *ctx, uint8_t seconds, Layer *layer) {
-  draw_border(ctx, layer, 0, seconds + 1, 60);
+  prv_draw_border(ctx, layer, 0, seconds + 1, 60);
 }
 
 // Handle representation of minutes
 void draw_minutes(GContext *ctx, uint8_t minutes, Layer *layer) {
-  draw_border(ctx, layer, 1, minutes + 1, 60);
+  prv_draw_border(ctx, layer, 1, minutes + 1, 60);
 }
 
 // Handle representation of hours
@@ -156,7 +156,7 @@ void draw_hours(GContext *ctx, uint8_t hours, Layer *layer) {
   if (hours > 12) { hours -= 12; }
   if (hours == 0) { hours = 12; }
 
-  draw_border(ctx, layer, 2, hours, 12);
+  prv_draw_border(ctx, layer, 2, hours, 12);
 }
 
 #endif
