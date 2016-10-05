@@ -5,11 +5,30 @@
 #include <pebble.h>
 #include "./ui.h"
 
-void draw_border(GContext *ctx,
-                 uint8_t x, uint8_t y,
-                 uint8_t width, uint8_t height,
-                 uint8_t stroke_width,
+static uint8_t s_number_time_units;
+
+static uint16_t get_stroke_width(Layer *layer) {
+  GRect bounds = layer_get_unobstructed_bounds(layer);
+  return ((bounds.size.w / s_number_time_units) / 2) - PADDING;
+}
+
+static uint8_t calculate_inset(Layer *layer, uint8_t arc_id) {
+  return (get_stroke_width(layer) + PADDING) * arc_id;
+}
+
+void draw_border(GContext *ctx, Layer *layer, uint8_t arc_id,
                  uint8_t segment, uint8_t total_segments) {
+  // Calculate x, y, width, height of border
+  uint8_t inset = calculate_inset(layer, arc_id);
+  GRect bounds = layer_get_unobstructed_bounds(layer);
+  GPoint layer_center = grect_center_point(&bounds);
+
+  uint16_t x = layer_center.x - (bounds.size.w / 2) + inset;
+  uint16_t y = layer_center.y - (bounds.size.h / 2) + inset;
+  uint16_t width = layer_center.x + (bounds.size.w / 2) - (inset * 2);
+  uint16_t height = layer_center.y + (bounds.size.h / 2) - (inset * 2);
+  uint16_t stroke_width = get_stroke_width(layer);
+
   // Calculate max no of pixels in perimeter less the size of the border at
   // the four corners
   uint16_t perimeter_max = ((width * 2) + (height * 2)) - (stroke_width * 4);
@@ -118,64 +137,26 @@ void draw_border(GContext *ctx,
   }
 }
 
+void set_number_time_units(uint8_t number_time_units) {
+  s_number_time_units = number_time_units;
+}
+
 // Handle representation of seconds
 void draw_seconds(GContext *ctx, uint8_t seconds, Layer *layer) {
-  uint8_t padding = 0;
-  uint8_t stroke_width = 14;
-  GRect bounds = layer_get_bounds(layer);
-  GPoint layer_center = grect_center_point(&bounds);
-  uint8_t width = bounds.size.w;
-  uint8_t height = bounds.size.h;
-
-  draw_border(ctx,
-              layer_center.x - (width / 2) + padding,
-              layer_center.y - (height / 2) + padding,
-              layer_center.x + (width / 2) - (padding * 2),
-              layer_center.y + (height / 2) - (padding * 2),
-              stroke_width,
-              seconds + 1,
-              60);
+  draw_border(ctx, layer, 0, seconds + 1, 60);
 }
 
 // Handle representation of minutes
 void draw_minutes(GContext *ctx, uint8_t minutes, Layer *layer) {
-  uint8_t padding = 20;
-  uint8_t stroke_width = 14;
-  GRect bounds = layer_get_bounds(layer);
-  GPoint layer_center = grect_center_point(&bounds);
-  uint8_t width = bounds.size.w;
-  uint8_t height = bounds.size.h;
-
-  draw_border(ctx,
-              layer_center.x - (width / 2) + padding,
-              layer_center.y - (height / 2) + padding,
-              layer_center.x + (width / 2) - (padding * 2),
-              layer_center.y + (height / 2) - (padding * 2),
-              stroke_width,
-              minutes + 1,
-              60);
+  draw_border(ctx, layer, 1, minutes + 1, 60);
 }
 
 // Handle representation of hours
 void draw_hours(GContext *ctx, uint8_t hours, Layer *layer) {
-  uint8_t padding = 40;
-  uint8_t stroke_width = 14;
-  GRect bounds = layer_get_bounds(layer);
-  GPoint layer_center = grect_center_point(&bounds);
-  uint8_t width = bounds.size.w;
-  uint8_t height = bounds.size.h;
-
   if (hours > 12) { hours -= 12; }
   if (hours == 0) { hours = 12; }
 
-  draw_border(ctx,
-              layer_center.x - (width / 2) + padding,
-              layer_center.y - (height / 2) + padding,
-              layer_center.x + (width / 2) - (padding * 2),
-              layer_center.y + (height / 2) - (padding * 2),
-              stroke_width,
-              hours,
-              12);
+  draw_border(ctx, layer, 2, hours, 12);
 }
 
 #endif

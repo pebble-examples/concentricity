@@ -47,6 +47,10 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
   update_time(tick_time);
 }
 
+static void unobstructed_area_did_change_handler(void *context) {
+  layer_mark_dirty(s_layer);
+}
+
 static void window_load(Window *window) {
   s_palette = malloc(sizeof(Palette));
   *s_palette = (Palette) {
@@ -54,13 +58,19 @@ static void window_load(Window *window) {
       PBL_IF_COLOR_ELSE(GColorVividViolet, GColorWhite),
       PBL_IF_COLOR_ELSE(GColorBlueMoon, GColorWhite)
   };
+  set_number_time_units(3);
 
   s_layer = layer_create(layer_get_bounds(window_get_root_layer(s_window)));
   layer_add_child(window_get_root_layer(s_window), s_layer);
   layer_set_update_proc(s_layer, update_display);
+
+  unobstructed_area_service_subscribe((UnobstructedAreaHandlers){
+      .did_change = unobstructed_area_did_change_handler
+  }, NULL);
 }
 
 static void window_unload(Window *window) {
+  unobstructed_area_service_unsubscribe();
   free(s_palette);
   layer_destroy(s_layer);
 }
